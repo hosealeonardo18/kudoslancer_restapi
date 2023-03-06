@@ -1,10 +1,6 @@
-const jobseekersModel = require('../model/jobseekersModel')
+const skillsModel = require('../model/skillsModel')
 const helperResponse = require('../helper/common');
-const bcrypt = require('bcryptjs');
 const { v4: uuidv4 } = require('uuid');
-const authHelper = require('../helper/AuthHelper');
-const jwt = require('jsonwebtoken');
-
 
 const skillsController = {
 	getAllSkill: async (req, res) => {
@@ -13,11 +9,11 @@ const skillsController = {
 			const limit = Number(req.query.limit) || 5;
 			const offset = (page - 1) * limit;
 			let searchParams = req.query.search || "";
-			let sortBy = req.query.sortBy || "fullname";
+			let sortBy = req.query.sortBy || "skill_name";
 			let sort = req.query.sort || "ASC";
 
-			const result = await jobseekersModel.getAllJobseeker(searchParams, sortBy, sort, limit, offset)
-			const { rows: [count] } = await jobseekersModel.countData();
+			const result = await skillsModel.getAllSkill(searchParams, sortBy, sort, limit, offset)
+			const { rows: [count] } = await skillsModel.countData();
 
 			const totalData = parseInt(count.count);
 			const totalPage = Math.ceil(totalData / limit);
@@ -28,175 +24,151 @@ const skillsController = {
 				totalPage: totalPage
 			}
 
-			helperResponse.response(res, result.rows, 200, "Get Data jobseeker Success!", pagination);
+			helperResponse.response(res, result.rows, 200, "Get Data Skills Success!", pagination);
 		} catch (error) {
 			console.log(error);
 		}
 	},
 
-	// getDetailJobseeker: async (req, res) => {
-	// 	const id = req.params.id;
+	getDetailSkill: async (req, res) => {
+		const id = req.params.id;
+		const { rowCount } = await skillsModel.getDetailSkill(id);
 
-	// 	const { rowCount } = await jobseekersModel.getDetailJobseeker(id);
+		if (!rowCount) return res.json({ message: `Data Skill ${id} Not Found!` });
 
-	// 	if (!rowCount) return res.json({ message: 'Data Jobseeker Not Found!' });
+		skillsModel.getDetailSkill(id).then(result => {
+			helperResponse.response(res, result.rows, 200, 'Get Data Success!');
+		}).catch(error => {
+			res.send(error);
+		})
+	},
 
-	// 	jobseekersModel.getDetailJobseeker(id).then(result => {
-	// 		helperResponse.response(res, result.rows, 200, 'Get Data Success!');
-	// 	}).catch(error => {
-	// 		res.send(error);
-	// 	})
-	// },
+	createSkill: async (req, res) => {
+		try {
+			const {
+				skill_name
+			} = req.body
 
-	// updateJobseeker: async (req, res) => {
-	// 	const image = req.file.filename;
-	// 	const id = req.params.id;
-	// 	const { fullname, email, password, no_telp, city, position, company_name, description, instagram, github } = req.body
-	// 	const PORT = process.env.PORT || 5000;
-	// 	const HOST = process.env.PGHOST || 'localhost';
+			const { rowCount } = await skillsModel.findSkillName(skill_name);
+			if (rowCount) return res.json({ message: "Skills are now available" })
 
-	// 	const { rowCount } = await jobseekersModel.getDetailJobseeker(id);
-	// 	if (!rowCount) return res.json({ message: 'Data Jobseeker Not Found!' });
+			const id = uuidv4();
+			const data = {
+				id,
+				skill_name
+			}
 
-	// 	const idToken = req.payload.id;
-	// 	if (idToken !== id) return res.json({ message: 'Sorry, this is not your account!' });
+			skillsModel.createSkill(data).then(result => {
+				helperResponse.response(res, result.rows, 201, "Create Skill Success!");
+			}).catch(error => {
+				res.status(500).send(error)
+			})
 
-	// 	const data = {
-	// 		id,
-	// 		fullname,
-	// 		email,
-	// 		password,
-	// 		no_telp,
-	// 		city,
-	// 		position,
-	// 		company_name,
-	// 		description,
-	// 		instagram,
-	// 		github,
-	// 		image: `http://${HOST}:${PORT}/img/${image}`,
-	// 	};
+		} catch (error) {
+			console.log(error);
+		}
+	},
 
-	// 	jobseekersModel
-	// 		.updateJobseekers(data)
-	// 		.then((result) => {
-	// 			helperResponse.response(res, result.rows, 201, `Data Jobseekers ${id} Updated!`);
-	// 		})
-	// 		.catch((error) => {
-	// 			res.send(error);
-	// 		});
-	// },
+	updateSkill: async (req, res) => {
+		const id = req.params.id;
+		const { skill_name } = req.body
 
-	// deleteJobseekers: async (req, res) => {
-	// 	const id = req.params.id;
-	// 	const { rowCount } = await jobseekersModel.findId(id);
+		const { rowCount } = await skillsModel.getDetailSkill(id);
+		if (!rowCount) return res.json({ message: 'Data Skill Not Found!' });
 
-	// 	console.log(rowCount);
-	// 	if (!rowCount) return res.json({ message: `Data Jobseeker id: ${id} Not Found!` })
+		const data = {
+			id,
+			skill_name
+		};
 
-	// 	jobseekersModel.deleteJobseekers(id).then(result => {
-	// 		helperResponse.response(res, result.rows, 200, "Data Jobseeker Deleted!")
-	// 	}).catch(error => {
-	// 		res.send(error)
-	// 	})
-	// },
+		skillsModel
+			.updateSkill(data)
+			.then((result) => {
+				helperResponse.response(res, result.rows, 201, `Data Skill ${id} Updated!`);
+			})
+			.catch((error) => {
+				res.send(error);
+			});
+	},
 
-	// registerJobseekers: async (req, res) => {
-	// 	try {
-	// 		const {
-	// 			fullname,
-	// 			email,
-	// 			no_telp,
-	// 			password,
-	// 			currentPassword
-	// 		} = req.body
+	deleteSkill: async (req, res) => {
+		const id = req.params.id;
+		const { rowCount } = await skillsModel.findId(id);
 
-	// 		const { rowCount } = await jobseekersModel.findEmail(email);
-	// 		if (rowCount) return res.json({ message: "Email already use!" })
+		if (!rowCount) return res.json({ message: `Data Skill id: ${id} Not Found!` })
 
-	// 		if (password !== currentPassword) return res.json({ message: "Password not Match!" })
+		skillsModel.deleteSkill(id).then(result => {
+			helperResponse.response(res, result.rows, 200, `Data Skill id: ${id} Deleted!`)
+		}).catch(error => {
+			res.send(error)
+		})
+	},
 
-	// 		const salt = bcrypt.genSaltSync(10);
-	// 		const passHash = bcrypt.hashSync(password, salt);
-	// 		const id = uuidv4();
+	createJobseekerSkill: async (req, res) => {
+		try {
+			const { skill_name } = req.body
+			const { rows: [skillName] } = await skillsModel.findSkillName(skill_name)
+			const id = uuidv4();
 
-	// 		const data = {
-	// 			id,
-	// 			fullname,
-	// 			email,
-	// 			password: passHash,
-	// 			no_telp,
-	// 			role: 'jobseeker'
-	// 		}
+			const { rows: [idSkill] } = await skillsModel.findSkillName(skill_name)
 
+			if (!skillName) {
+				const data = { id, skill_name }
+				const jobseekerId = req.payload
 
-	// 		jobseekersModel.registerJobseekers(data).then(result => {
-	// 			helperResponse.response(res, result.rows, 201, "Register Jobseeker Success!");
-	// 		}).catch(error => {
-	// 			res.status(500).send(error)
-	// 		})
+				const idSkillJobseeker = uuidv4();
 
-	// 	} catch (error) {
-	// 		console.log(error);
-	// 	}
-	// },
+				skillsModel.createSkill(data).then(async (result) => {
+					console.log(result);
+					if (result.rowCount !== 0) {
+						const data = {
+							id: idSkillJobseeker,
+							skillId: id,
+							jobseekerId: jobseekerId.id
+						}
 
-	// loginJobseekers: async (req, res) => {
-	// 	try {
-	// 		const { email, password } = req.body;
-	// 		const { rows: [cek] } = await jobseekersModel.findEmail(email);
+						return skillsModel.createJobseekerSkill(data).then(result => { return helperResponse.response(res, result.rows, 201, "Create Jobseeker Skill Successfull!"); })
+					} else {
+						return helperResponse.response(res, result.rows, 201, "Create Skill Success!");
+					}
 
-	// 		if (!cek) return res.json({ message: "Email Not Register!" });
+				}).catch(error => {
+					console.log(error);
+					res.status(500).send(error)
+				})
+			} else {
+				const jobseekerId = req.payload
+				const { rows: [skill] } = await skillsModel.findSkillName(skill_name)
 
-	// 		const validatePassword = bcrypt.compareSync(password, cek.password);
-	// 		if (!validatePassword) return res.json({ message: "Password Incorect" });
+				data = {
+					id,
+					skillId: skill.id,
+					jobseekerId: jobseekerId.id
+				}
 
-	// 		delete cek.password;
-	// 		delete cek.password;
-	// 		delete cek.city;
-	// 		delete cek.position;
-	// 		delete cek.company_name;
-	// 		delete cek.description;
-	// 		delete cek.instagram;
-	// 		delete cek.github;
+				skillsModel.createJobseekerSkill(data).then(result => { helperResponse.response(res, result.rows, 201, "Create Jobseeker Skill Successfull!"); })
+			}
 
-	// 		let payload = {
-	// 			id: cek.id,
-	// 			email: cek.email,
-	// 			role: cek.role
-	// 		}
+		} catch (error) {
+			console.log(error);
+		}
+	},
 
-	// 		cek.token = authHelper.generateToken(payload);
-	// 		cek.refreshToken = authHelper.generateRefreshToken(payload)
+	detailJobseekerSkill: async (req, res) => {
+		const idJobseeker = req.payload.id
 
-	// 		helperResponse.response(res, cek, 201, "Login Successfull")
+		const result = await skillsModel.getDetailSkillJobseeker(idJobseeker)
+		const { rowCount } = result
+		if (!rowCount) return res.json({ message: 'This id has no data' })
 
-	// 	} catch (error) {
-	// 		console.log(error);
-	// 	}
-	// },
+		const { rows } = result
 
-	// refreshTokenJobseekers: (req, res) => {
-	// 	try {
-	// 		const { refreshToken } = req.body;
-
-	// 		let decode = jwt.verify(refreshToken, process.env.SECRETE_KEY_JWT);
-
-	// 		const payload = {
-	// 			email: decode.email,
-	// 			role: decode.role
-	// 		}
-
-	// 		const result = {
-	// 			token: authHelper.generateToken(payload),
-	// 			refreshToken: authHelper.generateRefreshToken(payload)
-	// 		}
-
-	// 		helperResponse.response(res, result, 200)
-	// 	} catch (error) {
-	// 		console.log(error);
-	// 	}
-	// },
-
+		skillsModel.getDetailSkillJobseeker(idJobseeker).then(result => {
+			helperResponse.response(res, result.rows, 200, 'Get Data Success!');
+		}).catch(error => {
+			res.send(error);
+		})
+	}
 }
 
 module.exports = skillsController;

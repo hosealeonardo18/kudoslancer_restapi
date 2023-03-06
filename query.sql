@@ -71,7 +71,7 @@ CREATE TABLE portfolios (
 
 CREATE TABLE experiences (
   id VARCHAR(255) PRIMARY KEY NOT NULL ,
-  posisition VARCHAR(255) NOT NULL,
+  position VARCHAR(255) NOT NULL,
   company_name VARCHAR(255) NOT NULL,
   date_before DATE NULL,
   date_after DATE NULL,

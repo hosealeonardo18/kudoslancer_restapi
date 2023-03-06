@@ -17,6 +17,11 @@ const jobseekersController = {
 			let sort = req.query.sort || "ASC";
 
 			const result = await jobseekersModel.getAllJobseeker(searchParams, sortBy, sort, limit, offset)
+			const { rows: [hidden] } = result;
+
+			delete hidden.password;
+			delete hidden.role;
+
 			const { rows: [count] } = await jobseekersModel.countData();
 
 			const totalData = parseInt(count.count);
@@ -61,11 +66,14 @@ const jobseekersController = {
 		const idToken = req.payload.id;
 		if (idToken !== id) return res.json({ message: 'Sorry, this is not your account!' });
 
+		const salt = bcrypt.genSaltSync(10);
+		const passHash = bcrypt.hashSync(password, salt);
+
 		const data = {
 			id,
 			fullname,
 			email,
-			password,
+			password: passHash,
 			no_telp,
 			city,
 			position,

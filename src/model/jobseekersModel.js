@@ -39,14 +39,7 @@ const countData = () => {
 
 // auth
 const registerJobseekers = (data) => {
-    const {
-        id,
-        fullname,
-        password,
-        email,
-        no_telp,
-        role
-    } = data
+    const { id, fullname, password, email, no_telp, role } = data
 
 
     return Pool.query(`INSERT INTO jobseekers(id, fullname, email, password, no_telp, city, position, company_name, description, image, instagram, github, role)
