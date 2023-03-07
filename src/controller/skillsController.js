@@ -127,7 +127,7 @@ const skillsController = {
 							jobseekerId: jobseekerId.id
 						}
 
-						return skillsModel.createJobseekerSkill(data).then(result => { return helperResponse.response(res, result.rows, 201, "Create Jobseeker Skill Successfull!"); })
+						return skillsModel.createJobseekerSkill(data).then(result => { return helperResponse.response(res, result.rows, 201, "Jobseeker Skill Created!"); })
 					} else {
 						return helperResponse.response(res, result.rows, 201, "Create Skill Success!");
 					}
@@ -146,7 +146,7 @@ const skillsController = {
 					jobseekerId: jobseekerId.id
 				}
 
-				skillsModel.createJobseekerSkill(data).then(result => { helperResponse.response(res, result.rows, 201, "Create Jobseeker Skill Successfull!"); })
+				skillsModel.createJobseekerSkill(data).then(result => { helperResponse.response(res, result.rows, 201, "Jobseeker Skill Created!"); })
 			}
 
 		} catch (error) {
@@ -161,13 +161,26 @@ const skillsController = {
 		const { rowCount } = result
 		if (!rowCount) return res.json({ message: 'This id has no data' })
 
-		const { rows } = result
 
 		skillsModel.getDetailSkillJobseeker(idJobseeker).then(result => {
 			helperResponse.response(res, result.rows, 200, 'Get Data Success!');
 		}).catch(error => {
 			res.send(error);
 		})
+	},
+
+	getDetailJobseekerSkill: async (req, res) => {
+		const id = req.params.id;
+		const { rowCount } = await skillsModel.getDetailSkillJobseeker(id);
+
+		if (!rowCount) return res.json({ message: `Data Skill ${id} Not Found!` });
+
+		skillsModel.getDetailSkillJobseeker(id).then(result => {
+			helperResponse.response(res, result.rows, 200, 'Get Data Success!');
+		}).catch(error => {
+			res.send(error);
+		})
+
 	}
 }
 

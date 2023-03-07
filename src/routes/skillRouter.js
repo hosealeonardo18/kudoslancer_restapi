@@ -13,6 +13,7 @@ router.delete('/:id', skillsController.deleteSkill);
 // Get Data skill by Jobseeker
 router.post('/jobseekerId', protect, skillsController.createJobseekerSkill)
 router.get('/detail/jobseekerId', protect, skillsController.detailJobseekerSkill);
+router.get('/detail/jobseekerId/:id', skillsController.getDetailJobseekerSkill);
 
 
 module.exports = router;

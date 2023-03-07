@@ -89,7 +89,7 @@ CREATE TABLE recruiters (
   fullname VARCHAR(255) NOT NULL,
   email VARCHAR(255) NOT NULL ,
   password VARCHAR(255) NOT NULL,
-  no_telp INT NULL,
+  no_telp VARCHAR(255) NULL,
   company_name VARCHAR(255) NULL, 
   company_field VARCHAR(255) NULL,
   city VARCHAR(255) NULL,
@@ -97,7 +97,8 @@ CREATE TABLE recruiters (
   instagram VARCHAR(255) NULL,
   linkedin VARCHAR(255) NULL,
   image VARCHAR(255) NULL,
-  image_thumbnail VARCHAR(255) NULL
+  image_thumbnail VARCHAR(255) NULL,
+  role VARCHAR(255) NULL
 );
 
 CREATE TABLE testimonials (

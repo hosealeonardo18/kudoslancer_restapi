@@ -11,10 +11,10 @@ const getDetailJobseeker = (id) => {
 
 const updateJobseekers = (data) => {
     const {
-        id, fullname, email, password, no_telp, city, position, company_name, description, instagram, github, image
+        id, fullname, email, no_telp, city, position, company_name, description, instagram, github, image
     } = data;
 
-    return Pool.query(`UPDATE jobseekers SET fullname='${fullname}', email='${email}', password='${password}',no_telp='${no_telp}', city='${city}', position='${position}',  company_name='${company_name}', description='${description}', image='${image}', instagram='${instagram}', github='${github}' WHERE id='${id}';`)
+    return Pool.query(`UPDATE jobseekers SET fullname='${fullname}', email='${email}',no_telp='${no_telp}', city='${city}', position='${position}',  company_name='${company_name}', description='${description}', image='${image}', instagram='${instagram}', github='${github}' WHERE id='${id}';`)
 }
 
 const deleteJobseekers = (id) => {

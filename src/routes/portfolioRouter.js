@@ -13,6 +13,6 @@ router.get('/:id', portfoliosController.getDetailPortfolio);
 router.put('/:id', protect, upload, portfoliosController.updatePortfolio);
 router.delete('/:id', protect, portfoliosController.deletePortfolio);
 
-router.get('/detail/jobseeker', protect, portfoliosController.getDetailPortfolioJobseeker);
+router.get('/detail/jobseeker/:id', portfoliosController.getDetailPortfolioJobseeker);
 
 module.exports = router;

@@ -71,6 +71,14 @@ const getDetailSkillJobseeker = (id) => {
     // return Pool.query(`SELECT * FROM jobseeker_skills WHERE jobseekerid='${id}'`)
 }
 
+const getAllSkillJobseeker = () => {
+    return Pool.query(`SELECT jobseeker_skills.*, jobseekers.fullname AS jobseeker_fullname, skills.skill_name AS skill_name  
+    FROM jobseeker_skills 
+    INNER JOIN jobseekers ON jobseekers.id = jobseeker_skills.jobseekerid
+    INNER JOIN skills ON skills.id = jobseeker_skills.skillId`)
+    // return Pool.query(`SELECT * FROM jobseeker_skills WHERE jobseekerid='${id}'`)
+}
+
 // const getAlljobseekerSkill = (searchParams, sortBy, sort, limit, offset) => {
 //     return Pool.query(`SELECT * FROM jobseeker_skills WHERE skill_name LIKE '%${searchParams}%' ORDER BY ${sortBy} ${sort} LIMIT ${limit} OFFSET ${offset}`)
 // }
@@ -85,5 +93,6 @@ module.exports = {
     findId,
     countData,
     createJobseekerSkill,
-    getDetailSkillJobseeker
+    getDetailSkillJobseeker,
+    getAllSkillJobseeker
 }

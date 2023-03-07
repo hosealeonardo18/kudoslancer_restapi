@@ -1,6 +1,7 @@
 const portfoliosModel = require('../model/portfoliosModel')
 const helperResponse = require('../helper/common');
 const { v4: uuidv4 } = require('uuid');
+const { uploadPhotoCloudinary } = require('../../cloudinary')
 
 
 const portfoliosController = {
@@ -52,13 +53,14 @@ const portfoliosController = {
 		try {
 			const image = req.file.filename;
 			const { application_name, link_repository, type_portfolio } = req.body
-			const PORT = process.env.PORT || 5000;
-			const HOST = process.env.PGHOST || 'localhost';
+
+
+			const upload = await uploadPhotoCloudinary(req.file.path)
 
 			const idJobseeker = req.payload.id
 			const id = uuidv4();
 
-			const data = { id, application_name, link_repository, type_portfolio, image: `http://${HOST}:${PORT}/img/${image}`, jobseekerId: idJobseeker }
+			const data = { id, application_name, link_repository, type_portfolio, image: upload.secure_url, jobseekerId: idJobseeker }
 
 			portfoliosModel.createPortfolio(data).then(result => {
 				helperResponse.response(res, result.rows, 201, "Portfolio Created!");
@@ -117,9 +119,9 @@ const portfoliosController = {
 	},
 
 	getDetailPortfolioJobseeker: async (req, res) => {
-		const cek = req.payload.id
+		const id = req.params.id
 
-		portfoliosModel.getDetailPortfolioJobseeker(cek).then(result => {
+		portfoliosModel.getDetailPortfolioJobseeker(id).then(result => {
 			helperResponse.response(res, result.rows, 200, 'Get Data Success!');
 		}).catch(error => {
 			res.send(error);

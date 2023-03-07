@@ -13,7 +13,7 @@ router.get('/:id', experiencesController.getDetailExperience);
 router.put('/:id', protect, upload, experiencesController.updateExperience);
 router.delete('/:id', protect, experiencesController.deleteExperiences);
 
-router.get('/detail/jobseeker', protect, experiencesController.getDetailExperienceJobseeker);
+router.get('/detail/jobseeker/:id', experiencesController.getDetailExperienceJobseeker);
 
 
 

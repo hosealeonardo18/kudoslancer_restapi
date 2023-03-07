@@ -4,10 +4,11 @@ const jobseekerRouter = require('./jobseekerRouter');
 const skillRouter = require('./skillRouter');
 const experienceRouter = require('./experienceRouter');
 const portfolioRouter = require('./portfolioRouter');
-// const recruiterRouter = require('./recruiterRouter');
+const recruiterRouter = require('./recruiterRouter');
 
 
 router.use('/jobseeker', jobseekerRouter);
+router.use('/recruiter', recruiterRouter);
 router.use('/skill', skillRouter);
 router.use('/experience', experienceRouter);
 router.use('/portfolio', portfolioRouter);

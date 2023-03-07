@@ -1,6 +1,7 @@
 const experiencesModel = require('../model/experiencesModel')
 const helperResponse = require('../helper/common');
 const { v4: uuidv4 } = require('uuid');
+const { uploadPhotoCloudinary } = require('../../cloudinary')
 
 const experiencesController = {
 	getAllExperience: async (req, res) => {
@@ -48,9 +49,9 @@ const experiencesController = {
 	},
 
 	getDetailExperienceJobseeker: async (req, res) => {
-		const cek = req.payload.id
+		const id = req.params.id;
 
-		experiencesModel.getDetailExperienceJobseeker(cek).then(result => {
+		experiencesModel.getDetailExperienceJobseeker(id).then(result => {
 			helperResponse.response(res, result.rows, 200, 'Get Data Success!');
 		}).catch(error => {
 			res.send(error);
@@ -61,8 +62,8 @@ const experiencesController = {
 		try {
 			const image = req.file.filename;
 			const { position, company_name, date_before, date_after, description } = req.body
-			const PORT = process.env.PORT || 5000;
-			const HOST = process.env.PGHOST || 'localhost';
+
+			const upload = await uploadPhotoCloudinary(req.file.path)
 
 			const idJobseeker = req.payload.id
 			const id = uuidv4();
@@ -75,7 +76,7 @@ const experiencesController = {
 				date_after,
 				description,
 				jobseekerId: idJobseeker,
-				image: `http://${HOST}:${PORT}/img/${image}`,
+				image: upload.secure_url,
 			}
 
 			experiencesModel.createExperience(data).then(result => {
