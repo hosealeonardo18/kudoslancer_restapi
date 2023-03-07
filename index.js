@@ -30,31 +30,7 @@ app.use('/', mainRouter);
 app.use(helmet());
 app.use(xss());
 app.use('/img', express.static('src/upload'))
-// app.use('/img', upload.array('image'), async (req, res) => {
-//     const uploader = async (path) => await cloudinary.upload(path, 'images')
 
-//     if (req.method === "POST") {
-//         const urls = []
-//         const files = req.files
-
-//         for (const file of files) {
-//             const { path } = file
-//             const newPath = await uploader(path)
-//             urls.push(newPath)
-//             fs.unlinkSync(path)
-
-//         }
-
-//         res.status(200).json({
-//             message: 'Images Upload Successfull',
-//             data: urls
-//         })
-//     } else {
-//         res.status(405).json({
-//             err: "Images not upoaded successfuly"
-//         })
-//     }
-// })
 app.all('*', (req, res, next) => {
     next(new createError.NotFound())
 })
