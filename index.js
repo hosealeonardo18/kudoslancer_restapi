@@ -8,9 +8,6 @@ const xss = require('helmet')
 const app = express();
 const port = process.env.PORT;
 const mainRouter = require('./src/routes/IndexRouter')
-const upload = require('./src/middleware/MulterMiddleware')
-const cloudinary = require('./cloudinary')
-const fs = require('fs')
 
 // body parse express 
 app.use(express.json());
