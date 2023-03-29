@@ -126,7 +126,8 @@ const recruitersController = {
 				company_field,
 				no_telp,
 				password: passHash,
-				role: 'recruiter'
+				role: 'recruiter',
+				image: 'https://res.cloudinary.com/dklpoff31/image/upload/v1680077751/default_p3c9hg.jpg'
 			}
 
 			recruitersModel.registerRecruiters(data).then(result => {

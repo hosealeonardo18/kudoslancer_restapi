@@ -139,7 +139,8 @@ const jobseekersController = {
 				email,
 				password: passHash,
 				no_telp,
-				role: 'jobseeker'
+				role: 'jobseeker',
+				image: 'https://res.cloudinary.com/dklpoff31/image/upload/v1680077751/default_p3c9hg.jpg'
 			}
 
 

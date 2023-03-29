@@ -38,10 +38,10 @@ const countData = () => {
 
 // auth
 const registerRecruiters = (data) => {
-    const { id, fullname, email, company_name, company_field, no_telp, password, role } = data
+    const { id, fullname, email, company_name, company_field, no_telp, password, role, image } = data
 
     return Pool.query(`INSERT INTO recruiters(id, fullname, email, password, no_telp, company_name, company_field, city, description, instagram, linkedin, image, image_thumbnail, role)
-    VALUES ('${id}','${fullname}', '${email}', '${password}', ${no_telp}, '${company_name}', '${company_field}', '', '', '', '', '', '', '${role}')`);
+    VALUES ('${id}','${fullname}', '${email}', '${password}', ${no_telp}, '${company_name}', '${company_field}', '', '', '', '', '${image}', '', '${role}')`);
 }
 
 const findEmail = (email) => {
