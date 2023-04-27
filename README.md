@@ -78,7 +78,7 @@ On the Kudoslancer website, users can easily search and select freelancers that 
 
 ## Documentation Postman
 
-[![Run in Postman](https://run.pstmn.io/button.svg)](https://www.postman.com/universal-moon-386224/workspace/kudoslancer/collection/24895506-35c09b99-b4ae-4088-8f7d-4236896450ae)
+[![Run in Postman](https://run.pstmn.io/button.svg)](https://documenter.getpostman.com/view/24895506/2s93eR5bCn)
 
 ## Deployment
 
