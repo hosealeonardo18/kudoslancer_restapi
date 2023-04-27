@@ -1,3 +1,43 @@
+<p align="center">
+<div align="center">
+  <img height="150" src="https://res.cloudinary.com/dklpoff31/image/upload/v1682587746/Logo_kudoslancer_sh22wb.png" alt="kudoslancer" border="0" crossorigin="anonymous"/>
+</div>
+  <h3 align="center">KudosLancer</h3>
+  <p align="center">
+    <a href="https://github.com/hosealeonardo18/kudoslancer_fe_nextjs"><strong>Explore the docs »</strong></a>
+    <br />
+    <a href="https://kudoslancer.vercel.app/">View Demo</a>
+    ·
+    <a href="https://kudoslancerrestapi.up.railway.app/">Api Demo</a>
+  </p>
+</p>
+
+<!-- TABLE OF CONTENTS -->
+
+## Table of Contents
+
+- [Table of Contents](#table-of-contents)
+- [About The Project](#about-the-project)
+  - [Built With](#built-with)
+- [Getting Started](#getting-started)
+  - [Prerequisites](#prerequisites)
+  - [Installation](#installation)
+  - [Setup .env](#setup-env)
+- [Screenshots](#screenshots)
+- [Contributing](#contributing)
+- [Related Project](#related-project)
+- [Contact](#contact)
+
+<!-- ABOUT THE PROJECT -->
+
+## About The Project
+
+The job hire website project with the name Kudoslancer is an online platform designed to bring together freelancers or freelancers with jobs that suit their abilities. This website was developed using Next.js and Redux frontend technologies to optimize display performance and efficiency as well as state management.
+
+On the backend, this website uses Express.js technology which functions as a server to manage data taken from Cloudinary. Cloudinary acts as an image data repository allowing users to easily view images from each freelance portfolio. This website is made with a responsive and user-friendly design to make it easier for users to access and use the website.
+
+On the Kudoslancer website, users can easily search and select freelancers that suit their needs by using the search feature or browsing the freelancer portfolio based on category and specialization. Each freelancer comes with a clear and detailed description, including a portfolio and testimonials from past clients.
+
 # Documentation Basic Backend
 
 ## Third Party Module
@@ -40,26 +80,14 @@
 
 ## Documentation Postman
 
-[Documentation Postman](https://documenter.postman.com/preview/24895506-272b67f9-f306-4527-b5ee-63d8942fe480?environment=&versionTag=latest&apiName=CURRENT&version=latest&documentationLayout=classic-double-column&right-sidebar=303030&top-bar=FFFFFF&highlight=EF5B25)
+[![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/24895506-35c09b99-b4ae-4088-8f7d-4236896450ae?action=collection%2Ffork&collection-url=entityId%3D24895506-35c09b99-b4ae-4088-8f7d-4236896450ae%26entityType%3Dcollection%26workspaceId%3D9b87db24-8902-434d-9479-61d362ef7604)
 
 ## Deployment
 
 | Deployment                       | Database                                    |
 | :------------------------------- | :------------------------------------------ |
 | [Railway](https://railway.app/)  | [postgreSQL](https://www.postgresql.org/)   |
-| [Cyclic](https://www.cyclic.sh/) | [ElephantSQL](https://www.elephantsql.com/) |
 
-- [API Product](https://blanjaolshopbackend-production.up.railway.app/product)
-- [API Seller](https://blanjaolshopbackend-production.up.railway.app/seller)
-- [API Customer](https://blanjaolshopbackend-production.up.railway.app/customer)
-- [API Categories](https://blanjaolshopbackend-production.up.railway.app/categories)
-
-## Access API Deploy by Cyclic
-
-- [API Product](https://wide-eyed-gilet-wasp.cyclic.app/product)
-- [API Seller](https://wide-eyed-gilet-wasp.cyclic.app/seller)
-- [API Customer](https://wide-eyed-gilet-wasp.cyclic.app/customer)
-- [API Categories](https://wide-eyed-gilet-wasp.cyclic.app/categories)
 
 ## Authors
 
@@ -82,3 +110,21 @@
 ```bash
   npm run lint
 ```
+
+## Contributing
+
+Contributions are what make the open source community such an amazing place to be learn, inspire, and create. Any contributions you make are **greatly appreciated**.
+
+1. Fork the Project
+2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the Branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+## Related Project
+
+:rocket: [`Backend KudosLancer`](https://github.com/hosealeonardo18/kudoslancer_restapi)
+
+:rocket: [`Frontend KudosLancer`](https://github.com/hosealeonardo18/kudoslancer_fe_nextjs)
+
+:rocket: [`Demo KudosLancer`](https://kudoslancer.vercel.app/)
